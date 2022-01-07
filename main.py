@@ -37,7 +37,7 @@ async def on_ready():
     print(today)
     print("We've logged in as {0.user}".format(client))
 
-
+# dwudziesta pierwsza dwadzieścia siedem
 async def djts():
     guildID = 871450821936693348
     channelID = 871450821936693350
@@ -63,7 +63,30 @@ async def papiezowa():
 
 papiezowa.start()
 
+# Moderacja
 
+@client.command(name = "ban")
+async def ban(ctx):
+    if ctx.message.author.guild_permissions.administrator:
+      if ctx.message.mentions:
+        await ctx.message.mentions[0].ban()
+        await ctx.message.channel.send('Użytkownik został zbanowany')
+      else:
+        await ctx.message.channel.send('Nie wybrano użytkownika')
+    else:
+      await ctx.message.channel.send('Nie masz uprawnień by wykonać tą komendę')
+
+@client.command(name = "kick")
+async def kick(ctx):
+    if ctx.message.author.guild_permissions.administrator:
+      if ctx.message.mentions:
+        await ctx.message.mentions[0].kick()
+        await ctx.message.channel.send('Użytkownik został wyrzucony z serwera')
+      else:
+        await ctx.message.channel.send('Nie wybrano użytkownika')
+    else:
+      await ctx.message.channel.send('Nie masz uprawnień by wykonać tą komendę')
+        
 @client.command(name="mute")
 async def mute(ctx):
     if ctx.message.author.guild_permissions.administrator:
@@ -95,7 +118,14 @@ async def unmute(ctx):
     else:
         await ctx.message.channel.send("Nie posiadasz wymaganych uprawnień")
 
+@client.command(name="purge")
+async def purge(ctx, arg: int):
+    if ctx.message.author.guild_permissions.administrator:
+        await ctx.channel.purge(limit=arg + 1)
+    else:
+        await ctx.channel.send('Nie posiadasz uprawnień')
 
+# Narzędzia
 @client.command(name="avatar")
 async def avatar(ctx):
     if ctx.message.mentions:
@@ -115,11 +145,11 @@ async def avatar(ctx):
 
         await ctx.message.channel.send(embed=embed)
 
+# Fun
 
 @client.command(name="cytat")
 async def cytat(ctx):
     await ctx.message.channel.send(randomQuote())
-
 
 @client.command(name="neko")
 async def neko(ctx):
@@ -133,21 +163,11 @@ async def cycki(ctx):
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
 
-
 @client.command(name="pusia")
 async def cycki(ctx):
     if ctx.message.channel.is_nsfw():
         await ctx.message.channel.send(nekos.img("pussy"))
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
-
-
-@client.command(name="purge")
-async def purge(ctx, arg: int):
-    if ctx.message.author.guild_permissions.administrator:
-        await ctx.channel.purge(limit=arg + 1)
-    else:
-        await ctx.channel.send('Nie posiadasz uprawnień')
-
 
 client.run(token)
