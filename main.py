@@ -23,17 +23,20 @@ def random_line(afile):
         line = aline
     return line
 
+
 def randomQuote():
     file = open("quotes", "r")
     quote = random_line(file)
     file.close()
     return '"' + quote + '" - Jan Paweł II'
 
+
 @client.event
 async def on_ready():
     today = datetime.now()
     print(today)
     print("We've logged in as {0.user}".format(client))
+
 
 async def djts():
     guildID = 871450821936693348
@@ -44,7 +47,8 @@ async def djts():
     embed.set_image(url="https://a.allegroimg.com/s1024/0cfcd2/89fdbb4644eeb8eecb07dada22c3")
     await guild.get_channel(channelID).send(embed=embed)
 
-@tasks.loop(minutes = 1)
+
+@tasks.loop(minutes=1)
 async def papiezowa():
     print("Odliczanie do papiezowej trwa")
     tragetH = 21
@@ -56,7 +60,9 @@ async def papiezowa():
     else:
         print('Minuta blizej do papiezowej')
 
+
 papiezowa.start()
+
 
 @client.command(name="mute")
 async def mute(ctx):
@@ -93,50 +99,55 @@ async def unmute(ctx):
 @client.command(name="avatar")
 async def avatar(ctx):
     if ctx.message.mentions:
-      user = ctx.message.mentions[0]
+        user = ctx.message.mentions[0]
 
-      embed = discord.Embed(title = "avatar:")
-      embed.set_author(name = user)
-      embed.set_image(url = user.avatar_url)
+        embed = discord.Embed(title="avatar:")
+        embed.set_author(name=user)
+        embed.set_image(url=user.avatar_url)
 
-      await ctx.message.channel.send(embed = embed)
+        await ctx.message.channel.send(embed=embed)
     else:
-      user = ctx.message.author
+        user = ctx.message.author
 
-      embed=discord.Embed(title = "Your avatar:")
-      embed.set_author(name = user)
-      embed.set_image(url = user.avatar_url)
+        embed = discord.Embed(title="Your avatar:")
+        embed.set_author(name=user)
+        embed.set_image(url=user.avatar_url)
 
-      await ctx.message.channel.send(embed=embed)
+        await ctx.message.channel.send(embed=embed)
+
 
 @client.command(name="cytat")
 async def cytat(ctx):
-
     await ctx.message.channel.send(randomQuote())
 
-@client.command(name = "neko")
+
+@client.command(name="neko")
 async def neko(ctx):
     await ctx.message.channel.send(nekos.img("neko"))
 
-@client.command(name = "cycki")
+
+@client.command(name="cycki")
 async def cycki(ctx):
     if ctx.message.channel.is_nsfw():
         await ctx.message.channel.send(nekos.img("boobs"))
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
 
-@client.command(name = "pusia")
+
+@client.command(name="pusia")
 async def cycki(ctx):
     if ctx.message.channel.is_nsfw():
         await ctx.message.channel.send(nekos.img("pussy"))
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
 
+
 @client.command(name="purge")
 async def purge(ctx, arg: int):
-  if ctx.message.author.guild_permissions.administrator:
-    await ctx.channel.purge(limit = arg)
-  else:
-    await ctx.channel.send('Nie posiadasz uprawnień')
-      
+    if ctx.message.author.guild_permissions.administrator:
+        await ctx.channel.purge(limit=arg)
+    else:
+        await ctx.channel.send('Nie posiadasz uprawnień')
+
+
 client.run(token)
