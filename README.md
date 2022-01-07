@@ -1,3 +1,7 @@
+# Dependencies
+   Discord.py <br/>
+   Nekos.py <br/>
+
 # AdamCorpBot
 Discord Bot serwera Adam Corp™
 
