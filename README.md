@@ -11,5 +11,3 @@ Funkcje: <br/>
    •Wyświetlanie awatarów użytkowników <br/>
    •Wysyłanie losowego cytatu Jana Pawła II <br/>
    •Wysyłanie losowego cytatu Jana Paweła II i zdjęcia Jana Pawła II o 21:37
-
-# test 
