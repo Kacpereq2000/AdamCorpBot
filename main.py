@@ -1,6 +1,7 @@
 import discord
 import nekos
-from discord.ext import commands
+from datetime import datetime
+from discord.ext import tasks, commands
 from discord.utils import get
 import random
 
@@ -22,11 +23,37 @@ def random_line(afile):
         line = aline
     return line
 
+def randomQuote():
+    file = open("quotes", "r")
+    quote = random_line(file)
+    file.close()
+    return '"' + quote + '" - Jan Paweł II'
 
 @client.event
 async def on_ready():
     print("We've logged in as {0.user}".format(client))
 
+async def djts():
+    guildID = 871450821936693348
+    channelID = 871450821936693350
+    guild = client.get_guild(guildID)
+    embed = discord.Embed(title=randomQuote())
+    embed.set_author(name="Adam Corp")
+    embed.set_image(url="https://a.allegroimg.com/s1024/0cfcd2/89fdbb4644eeb8eecb07dada22c3")
+    await guild.get_channel(channelID).send(embed=embed)
+
+@tasks.loop(minutes = 1)
+async def papiezowa():
+    print("Odliczanie do papiezowej trwa")
+    tragetH = 21
+    targetM = 37
+    currentTime = datetime.now()
+    if currentTime.hour == tragetH and currentTime.minute == targetM:
+        await djts()
+    else:
+        print('Minuta blizej do papiezowej')
+
+papiezowa.start()
 
 @client.command(name="mute")
 async def mute(ctx):
@@ -63,19 +90,26 @@ async def unmute(ctx):
 @client.command(name="avatar")
 async def avatar(ctx):
     if ctx.message.mentions:
-        user = ctx.message.mentions[0]
+      user = ctx.message.mentions[0]
 
-        embed = discord.Embed(title="avatar:")
-        embed.set_author(name=user)
-        embed.set_image(url=user.avatar_url)
+      embed = discord.Embed(title = "avatar:")
+      embed.set_author(name = user)
+      embed.set_image(url = user.avatar_url)
 
+      await ctx.message.channel.send(embed = embed)
+    else:
+      user = ctx.message.author
+
+      embed=discord.Embed(title = "Your avatar:")
+      embed.set_author(name = user)
+      embed.set_image(url = user.avatar_url)
+
+      await ctx.message.channel.send(embed=embed)
 
 @client.command(name="cytat")
 async def cytat(ctx):
-    file = open("quotes", "r")
-    quote = random_line(file)
-    file.close()
-    await ctx.message.channel.send('"' + quote + '" - Jan Paweł II')
+
+    await ctx.message.channel.send(randomQuote())
 
 @client.command(name = "neko")
 async def neko(ctx):
