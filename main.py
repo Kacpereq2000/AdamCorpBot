@@ -31,6 +31,8 @@ def randomQuote():
 
 @client.event
 async def on_ready():
+    today = datetime.now()
+    print(today)
     print("We've logged in as {0.user}".format(client))
 
 async def djts():
@@ -48,6 +50,7 @@ async def papiezowa():
     tragetH = 21
     targetM = 37
     currentTime = datetime.now()
+    await client.wait_until_ready()
     if currentTime.hour == tragetH and currentTime.minute == targetM:
         await djts()
     else:
