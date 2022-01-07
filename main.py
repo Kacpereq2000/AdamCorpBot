@@ -145,7 +145,7 @@ async def cycki(ctx):
 @client.command(name="purge")
 async def purge(ctx, arg: int):
     if ctx.message.author.guild_permissions.administrator:
-        await ctx.channel.purge(limit=arg)
+        await ctx.channel.purge(limit=arg + 1)
     else:
         await ctx.channel.send('Nie posiadasz uprawnień')
 
