@@ -125,4 +125,18 @@ async def cycki(ctx):
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
 
+@client.command(name = "pusia")
+async def cycki(ctx):
+    if ctx.message.channel.is_nsfw():
+        await ctx.message.channel.send(nekos.img("pussy"))
+    else:
+        await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
+
+@client.command(name="purge")
+async def purge(ctx, arg: int):
+  if ctx.message.author.guild_permissions.administrator:
+    await ctx.channel.purge(limit = arg)
+  else:
+    await ctx.channel.send('Nie posiadasz uprawnień')
+      
 client.run(token)
