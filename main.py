@@ -50,7 +50,8 @@ async def on_ready():
 # don't touch it works
 @client.event
 async def on_message(message):
-    if 'nigger' in message.content.split():
+    text = message.content.lower()
+    if 'nigger' in text.split():
         f = open('nword.json')
         nwordCounter = json.load(f)
         try:
