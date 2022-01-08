@@ -15,6 +15,11 @@ client = commands.Bot(command_prefix=",")
 
 
 # https://stackoverflow.com/a/3540315
+
+def timestamp():
+    today = datetime.now()
+    print(today)
+
 def random_line(afile):
     line = next(afile)
     for num, aline in enumerate(afile, 2):
@@ -33,9 +38,10 @@ def randomQuote():
 
 @client.event
 async def on_ready():
-    today = datetime.now()
-    print(today)
+    timestamp()
     print("We've logged in as {0.user}".format(client))
+    game = discord.Game("Linux > Windows")
+    await client.change_presence(status=discord.Status.idle, activity=game)
 
 # dwudziesta pierwsza dwadzieścia siedem
 async def djts():
@@ -86,7 +92,7 @@ async def kick(ctx):
         await ctx.message.channel.send('Nie wybrano użytkownika')
     else:
       await ctx.message.channel.send('Nie masz uprawnień by wykonać tą komendę')
-        
+
 @client.command(name="mute")
 async def mute(ctx):
     if ctx.message.author.guild_permissions.administrator:
