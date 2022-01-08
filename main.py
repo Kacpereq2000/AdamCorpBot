@@ -1,5 +1,6 @@
 import discord
 import nekos
+import json
 from datetime import datetime
 from discord.ext import tasks, commands
 from discord.utils import get
@@ -28,13 +29,16 @@ def random_line(afile):
         line = aline
     return line
 
-
 def randomQuote():
     file = open("quotes", "r")
     quote = random_line(file)
     file.close()
     return '"' + quote + '" - Jan Paweł II'
 
+nword = {}
+f = open('nword.json')
+nwordCounter = json.load(f)
+f.close()
 
 @client.event
 async def on_ready():
@@ -42,6 +46,25 @@ async def on_ready():
     print("We've logged in as {0.user}".format(client))
     game = discord.Game("Linux > Windows")
     await client.change_presence(status=discord.Status.idle, activity=game)
+
+# don't touch it works
+@client.event
+async def on_message(message):
+    if 'nigger' in message.content.split():
+        f = open('nword.json')
+        nwordCounter = json.load(f)
+        try:
+            currentCounter = nwordCounter[str(message.author.id)]['counter']
+            num = int(currentCounter)
+        except:
+            num = 0
+        num += 1
+        nword[str(message.author.id)] = {'counter': str(num)}
+        with open('nword.json', 'w') as f:
+            json.dump(nword, f)
+        f.close()
+    else:
+        await client.process_commands(message)
 
 # dwudziesta pierwsza dwadzieścia siedem
 async def djts():
@@ -150,6 +173,19 @@ async def avatar(ctx):
         embed.set_image(url=user.avatar_url)
 
         await ctx.message.channel.send(embed=embed)
+
+@client.command(name="counter")
+async def counter(ctx):
+    if ctx.message.mentions:
+        f = open('nword.json')
+        nword = json.load(f)
+        f.close()
+        userID = str(ctx.message.mentions[0].id)
+        user = ctx.message.mentions[0].name
+        counter = nword[userID]['counter']
+        await ctx.message.channel.send(user + " napisał nworda " + str(counter) + " razy")
+    else:
+        await ctx.message.channel.send("Nie oznaczono użytkownika")
 
 # Fun
 
