@@ -213,4 +213,8 @@ async def cycki(ctx):
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
 
+@client.command(name="test")
+async def test(ctx):
+    await ctx.message.channel.send("test")
+    
 client.run(token)
