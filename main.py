@@ -21,6 +21,7 @@ def timestamp():
     today = datetime.now()
     print(today)
 
+
 def random_line(afile):
     line = next(afile)
     for num, aline in enumerate(afile, 2):
@@ -29,11 +30,13 @@ def random_line(afile):
         line = aline
     return line
 
+
 def randomQuote():
     file = open("quotes", "r")
     quote = random_line(file)
     file.close()
     return '"' + quote + '" - Jan Paweł II'
+
 
 nword = {}
 f = open('nword.json')
@@ -77,7 +80,6 @@ async def djts():
     embed.set_image(url="https://a.allegroimg.com/s1024/0cfcd2/89fdbb4644eeb8eecb07dada22c3")
     await guild.get_channel(channelID).send(embed=embed)
 
-
 @tasks.loop(minutes=1)
 async def papiezowa():
     print("Odliczanie do papiezowej trwa")
@@ -90,32 +92,32 @@ async def papiezowa():
     else:
         print('Minuta blizej do papiezowej')
 
-
 papiezowa.start()
 
 # Moderacja
 
-@client.command(name = "ban")
+@client.command(name="ban")
 async def ban(ctx):
     if ctx.message.author.guild_permissions.administrator:
-      if ctx.message.mentions:
-        await ctx.message.mentions[0].ban()
-        await ctx.message.channel.send('Użytkownik został zbanowany')
-      else:
-        await ctx.message.channel.send('Nie wybrano użytkownika')
+        if ctx.message.mentions:
+            await ctx.message.mentions[0].ban()
+            await ctx.message.channel.send('Użytkownik został zbanowany')
+        else:
+            await ctx.message.channel.send('Nie wybrano użytkownika')
     else:
-      await ctx.message.channel.send('Nie masz uprawnień by wykonać tą komendę')
+        await ctx.message.channel.send('Nie masz uprawnień by wykonać tą komendę')
 
-@client.command(name = "kick")
+
+@client.command(name="kick")
 async def kick(ctx):
     if ctx.message.author.guild_permissions.administrator:
-      if ctx.message.mentions:
-        await ctx.message.mentions[0].kick()
-        await ctx.message.channel.send('Użytkownik został wyrzucony z serwera')
-      else:
-        await ctx.message.channel.send('Nie wybrano użytkownika')
+        if ctx.message.mentions:
+            await ctx.message.mentions[0].kick()
+            await ctx.message.channel.send('Użytkownik został wyrzucony z serwera')
+        else:
+            await ctx.message.channel.send('Nie wybrano użytkownika')
     else:
-      await ctx.message.channel.send('Nie masz uprawnień by wykonać tą komendę')
+        await ctx.message.channel.send('Nie masz uprawnień by wykonać tą komendę')
 
 @client.command(name="mute")
 async def mute(ctx):
@@ -134,7 +136,6 @@ async def mute(ctx):
             await ctx.message.channel.send("Nie oznaczono żadnego użytkownika")
     else:
         await ctx.message.channel.send("Nie posiadasz wymaganych uprawnień")
-
 
 @client.command(name="unmute")
 async def unmute(ctx):
@@ -194,6 +195,7 @@ async def counter(ctx):
 async def cytat(ctx):
     await ctx.message.channel.send(randomQuote())
 
+
 @client.command(name="neko")
 async def neko(ctx):
     await ctx.message.channel.send(nekos.img("neko"))
@@ -206,11 +208,13 @@ async def cycki(ctx):
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
 
+
 @client.command(name="pusia")
-async def cycki(ctx):
+async def pusia(ctx):
     if ctx.message.channel.is_nsfw():
         await ctx.message.channel.send(nekos.img("pussy"))
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
-    
+
+
 client.run(token)
