@@ -74,8 +74,8 @@ async def on_message(message):
 
 # dwudziesta pierwsza dwadzieścia siedem
 async def djts():
-    guildID = 871450821936693348
-    channelID = 871450821936693350
+    guildID = 930137878720294953
+    channelID = 930137878720294958
     guild = client.get_guild(guildID)
     embed = discord.Embed(title=randomQuote())
     embed.set_author(name="Adam Corp")
