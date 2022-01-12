@@ -47,8 +47,10 @@ f.close()
 async def on_ready():
     timestamp()
     print("We've logged in as {0.user}".format(client))
-    game = discord.Game("Linux > Windows")
+    f = open('status', "r")
+    game = discord.Game(random_line(f))
     await client.change_presence(status=discord.Status.idle, activity=game)
+    f.close()
 
 # don't touch it works
 @client.event
@@ -82,7 +84,6 @@ async def djts():
 
 @tasks.loop(minutes=1)
 async def papiezowa():
-    print("Odliczanie do papiezowej trwa")
     tragetH = 21
     targetM = 37
     currentTime = datetime.now()
