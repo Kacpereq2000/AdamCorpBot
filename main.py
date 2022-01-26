@@ -1,6 +1,5 @@
 import discord
 import nekos
-import json
 from datetime import datetime
 from discord.ext import tasks, commands
 from discord.utils import get
