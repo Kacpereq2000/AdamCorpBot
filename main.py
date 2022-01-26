@@ -41,10 +41,10 @@ def random_quote():
 async def on_ready():
     timestamp()
     print("We've logged in as {0.user}".format(client))
-    f = open('status', "r")
-    game = discord.Game(random_line(f))
+    status = open('status', "r")
+    game = discord.Game(random_line(status))
     await client.change_presence(status=discord.Status.idle, activity=game)
-    f.close()
+    status.close()
 
 
 # dwudziesta pierwsza dwadzieścia siedem
