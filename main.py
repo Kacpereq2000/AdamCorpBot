@@ -31,7 +31,7 @@ def random_line(afile):
     return line
 
 
-def randomQuote():
+def random_quote():
     file = open("quotes", "r")
     quote = random_line(file)
     file.close()
@@ -40,8 +40,9 @@ def randomQuote():
 
 nword = {}
 f = open('nword.json')
-nwordCounter = json.load(f)
+nword_counter = json.load(f)
 f.close()
+
 
 @client.event
 async def on_ready():
@@ -51,6 +52,7 @@ async def on_ready():
     game = discord.Game(random_line(f))
     await client.change_presence(status=discord.Status.idle, activity=game)
     f.close()
+
 
 # don't touch it works
 @client.event
@@ -72,15 +74,17 @@ async def on_message(message):
     else:
         await client.process_commands(message)
 
+
 # dwudziesta pierwsza dwadzieścia siedem
 async def djts():
     guildID = 930137878720294953
     channelID = 930137878720294958
     guild = client.get_guild(guildID)
-    embed = discord.Embed(title=randomQuote())
+    embed = discord.Embed(title=random_quote())
     embed.set_author(name="Adam Corp")
     embed.set_image(url="https://a.allegroimg.com/s1024/0cfcd2/89fdbb4644eeb8eecb07dada22c3")
     await guild.get_channel(channelID).send(embed=embed)
+
 
 @tasks.loop(minutes=1)
 async def papiezowa():
@@ -94,6 +98,7 @@ async def papiezowa():
         print('Minuta blizej do papiezowej')
 
 papiezowa.start()
+
 
 # Moderacja
 
@@ -120,6 +125,7 @@ async def kick(ctx):
     else:
         await ctx.message.channel.send('Nie masz uprawnień by wykonać tą komendę')
 
+
 @client.command(name="mute")
 async def mute(ctx):
     if ctx.message.author.guild_permissions.administrator:
@@ -130,25 +136,27 @@ async def mute(ctx):
             perms = discord.Permissions(send_messages=False)
             await get(ctx.guild.roles, name="muted").edit(permissions=perms)
         if ctx.message.mentions:
-            muteRole = get(ctx.guild.roles, name="muted")
-            await ctx.message.mentions[0].add_roles(muteRole)
+            mute_role = get(ctx.guild.roles, name="muted")
+            await ctx.message.mentions[0].add_roles(mute_role)
             await ctx.message.channel.send('Wyciszono użytkownika')
         else:
             await ctx.message.channel.send("Nie oznaczono żadnego użytkownika")
     else:
         await ctx.message.channel.send("Nie posiadasz wymaganych uprawnień")
 
+
 @client.command(name="unmute")
 async def unmute(ctx):
     if ctx.message.author.guild_permissions.administrator:
         if ctx.message.mentions:
-            muteRole = get(ctx.guild.roles, name="muted")
-            await ctx.message.mentions[0].remove_roles(muteRole)
+            mute_role = get(ctx.guild.roles, name="muted")
+            await ctx.message.mentions[0].remove_roles(mute_role)
             await ctx.message.channel.send('Zakończono wyciszenie użytkownika')
         else:
             await ctx.message.channel.send("Nie oznaczono żadnego użytkownika")
     else:
         await ctx.message.channel.send("Nie posiadasz wymaganych uprawnień")
+
 
 @client.command(name="purge")
 async def purge(ctx, arg: int):
@@ -157,7 +165,9 @@ async def purge(ctx, arg: int):
     else:
         await ctx.channel.send('Nie posiadasz uprawnień')
 
+
 # Narzędzia
+
 @client.command(name="avatar")
 async def avatar(ctx):
     if ctx.message.mentions:
@@ -177,24 +187,26 @@ async def avatar(ctx):
 
         await ctx.message.channel.send(embed=embed)
 
+
 @client.command(name="counter")
 async def counter(ctx):
     if ctx.message.mentions:
         f = open('nword.json')
         nword = json.load(f)
         f.close()
-        userID = str(ctx.message.mentions[0].id)
+        user_id = str(ctx.message.mentions[0].id)
         user = ctx.message.mentions[0].name
-        counter = nword[userID]['counter']
+        counter = nword[user_id]['counter']
         await ctx.message.channel.send(user + " napisał nworda " + str(counter) + " razy")
     else:
         await ctx.message.channel.send("Nie oznaczono użytkownika")
+
 
 # Fun
 
 @client.command(name="cytat")
 async def cytat(ctx):
-    await ctx.message.channel.send(randomQuote())
+    await ctx.message.channel.send(random_quote())
 
 
 @client.command(name="neko")
@@ -216,6 +228,7 @@ async def pusia(ctx):
         await ctx.message.channel.send(nekos.img("pussy"))
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
+
 
 @client.command(name="lewd")
 async def lewd(ctx):
