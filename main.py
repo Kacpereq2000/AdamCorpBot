@@ -48,10 +48,10 @@ f.close()
 async def on_ready():
     timestamp()
     print("We've logged in as {0.user}".format(client))
-    f = open('status', "r")
-    game = discord.Game(random_line(f))
+    status = open('status', "r")
+    game = discord.Game(random_line(status))
     await client.change_presence(status=discord.Status.idle, activity=game)
-    f.close()
+    status.close()
 
 
 # don't touch it works
@@ -59,40 +59,40 @@ async def on_ready():
 async def on_message(message):
     text = message.content.lower()
     if 'nigger' in text.split():
-        f = open('nword.json')
-        nwordCounter = json.load(f)
+        nword_file = open('nword.json')
+        loaded_counter = json.load(nword_file)
         try:
-            currentCounter = nwordCounter[str(message.author.id)]['counter']
-            num = int(currentCounter)
-        except:
+            current_counter = loaded_counter[str(message.author.id)]['counter']
+            num = int(current_counter)
+        except ReferenceError:
             num = 0
         num += 1
         nword[str(message.author.id)] = {'counter': str(num)}
-        with open('nword.json', 'w') as f:
-            json.dump(nword, f)
-        f.close()
+        with open('nword.json', 'w') as nword_file:
+            json.dump(nword, nword_file)
+        nword_file.close()
     else:
         await client.process_commands(message)
 
 
 # dwudziesta pierwsza dwadzieścia siedem
 async def djts():
-    guildID = 930137878720294953
-    channelID = 930137878720294958
-    guild = client.get_guild(guildID)
+    guild_id = 930137878720294953
+    channel_id = 930137878720294958
+    guild = client.get_guild(guild_id)
     embed = discord.Embed(title=random_quote())
     embed.set_author(name="Adam Corp")
     embed.set_image(url="https://a.allegroimg.com/s1024/0cfcd2/89fdbb4644eeb8eecb07dada22c3")
-    await guild.get_channel(channelID).send(embed=embed)
+    await guild.get_channel(channel_id).send(embed=embed)
 
 
 @tasks.loop(minutes=1)
 async def papiezowa():
-    tragetH = 21
-    targetM = 37
-    currentTime = datetime.now()
+    target_h = 21
+    target_m = 37
+    current_time = datetime.now()
     await client.wait_until_ready()
-    if currentTime.hour == tragetH and currentTime.minute == targetM:
+    if current_time.hour == target_h and current_time.minute == target_m:
         await djts()
     else:
         print('Minuta blizej do papiezowej')
@@ -100,7 +100,7 @@ async def papiezowa():
 papiezowa.start()
 
 
-# Moderacja
+# Moderator
 
 @client.command(name="ban")
 async def ban(ctx):
@@ -191,13 +191,13 @@ async def avatar(ctx):
 @client.command(name="counter")
 async def counter(ctx):
     if ctx.message.mentions:
-        f = open('nword.json')
-        nword = json.load(f)
-        f.close()
+        counted = open('nword.json')
+        current_counter = json.load(counted)
+        counted.close()
         user_id = str(ctx.message.mentions[0].id)
         user = ctx.message.mentions[0].name
-        counter = nword[user_id]['counter']
-        await ctx.message.channel.send(user + " napisał nworda " + str(counter) + " razy")
+        nwords = current_counter[user_id]['counter']
+        await ctx.message.channel.send(user + " napisał nworda " + str(nwords) + " razy")
     else:
         await ctx.message.channel.send("Nie oznaczono użytkownika")
 
