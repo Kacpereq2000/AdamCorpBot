@@ -38,41 +38,14 @@ def random_quote():
     return '"' + quote + '" - Jan Paweł II'
 
 
-nword = {}
-f = open('nword.json')
-nword_counter = json.load(f)
-f.close()
-
-
 @client.event
 async def on_ready():
     timestamp()
     print("We've logged in as {0.user}".format(client))
-    status = open('status', "r")
-    game = discord.Game(random_line(status))
+    f = open('status', "r")
+    game = discord.Game(random_line(f))
     await client.change_presence(status=discord.Status.idle, activity=game)
-    status.close()
-
-
-# don't touch it works
-@client.event
-async def on_message(message):
-    text = message.content.lower()
-    if 'nigger' in text.split():
-        nword_file = open('nword.json')
-        loaded_counter = json.load(nword_file)
-        try:
-            current_counter = loaded_counter[str(message.author.id)]['counter']
-            num = int(current_counter)
-        except ReferenceError:
-            num = 0
-        num += 1
-        nword[str(message.author.id)] = {'counter': str(num)}
-        with open('nword.json', 'w') as nword_file:
-            json.dump(nword, nword_file)
-        nword_file.close()
-    else:
-        await client.process_commands(message)
+    f.close()
 
 
 # dwudziesta pierwsza dwadzieścia siedem
@@ -100,7 +73,7 @@ async def papiezowa():
 papiezowa.start()
 
 
-# Moderator
+# Moderacja
 
 @client.command(name="ban")
 async def ban(ctx):
@@ -186,20 +159,6 @@ async def avatar(ctx):
         embed.set_image(url=user.avatar_url)
 
         await ctx.message.channel.send(embed=embed)
-
-
-@client.command(name="counter")
-async def counter(ctx):
-    if ctx.message.mentions:
-        counted = open('nword.json')
-        current_counter = json.load(counted)
-        counted.close()
-        user_id = str(ctx.message.mentions[0].id)
-        user = ctx.message.mentions[0].name
-        nwords = current_counter[user_id]['counter']
-        await ctx.message.channel.send(user + " napisał nworda " + str(nwords) + " razy")
-    else:
-        await ctx.message.channel.send("Nie oznaczono użytkownika")
 
 
 # Fun

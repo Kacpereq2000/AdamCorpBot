@@ -11,6 +11,5 @@ Funkcje: <br/>
    •Usuwanie określonej liczby wiadomości <br/>
    •Wyświetlanie awatarów użytkowników <br/>
    •NSFW obrazki <br/>
-   •Nword counter <br/>
    •Wysyłanie losowego cytatu Jana Pawła II <br/>
    •Wysyłanie losowego cytatu Jana Paweła II i zdjęcia Jana Pawła II o 21:37 <br/>
