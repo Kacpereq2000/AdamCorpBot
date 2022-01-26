@@ -217,5 +217,12 @@ async def pusia(ctx):
     else:
         await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
 
+@client.command(name="lewd")
+async def lewd(ctx):
+    if ctx.message.channel.is_nsfw():
+        await ctx.message.channel.send(nekos.img("lewd"))
+    else:
+        await ctx.message.channel.send("Aby użyć tej komendy kanał musi być oznaczony jako NSFW")
+
 
 client.run(token)
