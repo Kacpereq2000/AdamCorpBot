@@ -5,13 +5,17 @@ from discord.ext import tasks, commands
 from discord.utils import get
 import random
 
+
 # get token from file
+
 
 f = open("token", "r")
 token = f.read()
 f.close()
 
+
 client = commands.Bot(command_prefix=",")
+
 
 def timestamp():
     today = datetime.now()
