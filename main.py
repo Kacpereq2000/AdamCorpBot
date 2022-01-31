@@ -13,13 +13,11 @@ f.close()
 
 client = commands.Bot(command_prefix=",")
 
-
-# https://stackoverflow.com/a/3540315
-
 def timestamp():
     today = datetime.now()
     print(today)
-
+    
+# https://stackoverflow.com/a/3540315
 
 def random_line(afile):
     line = next(afile)
